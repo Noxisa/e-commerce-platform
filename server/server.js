@@ -1,24 +1,23 @@
-// CORS (allow your frontend)
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
-const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-const mongoSanitize = require('express-mongo-sanitize');
-const { body, validationResult } = require('express-validator');
+const { connectDB } = require('./config/database');
 
 const app = express();
 
-// === BEZPIECZEŃSTWO ===
-app.use(helmet()); // Zabezpiecza nagłówki HTTP
-app.use(express.json({ limit: '10kb' })); // Ograniczenie rozmiaru body
-app.use(mongoSanitize()); // Zabezpieczenie przed NoSQL injection
+connectDB();
 
+app.use(helmet());
+app.use(express.json({ limit: '10kb' }));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 // CORS – tylko dla Twojego frontendu
 const allowedOrigins = [
   'http://localhost:3000',
-  // W produkcji: 'https://twojafirma.pl'
+  
 ];
 
 app.use(cors({
@@ -31,6 +30,14 @@ app.use(cors({
   },
   credentials: true,
 }));
+
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/orders', require('./routes/orders'));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Serwer: http://localhost:${PORT}`);
+});
 
 // Rate limiting – ochrona przed spamem i brute-force
 const orderLimiter = rateLimit({
