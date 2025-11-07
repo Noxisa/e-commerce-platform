@@ -21,7 +21,7 @@ The core idea of FurniWood is to provide a seamless and personalized shopping ex
   - CSS (with variables, responsive design)
 - **Backend**:
   - Node.js + Express (REST API)
-  - MongoDB (via MongoDB Atlas for data storage)
+  - PostgreSQL 
   - Bcrypt (password hashing)
   - JSON Web Token (JWT for authentication)
   - Nodemailer (email notifications)
@@ -33,5 +33,5 @@ The core idea of FurniWood is to provide a seamless and personalized shopping ex
 ## Installation
 ### Prerequisites
 - Node.js (v18 or higher)
-- MongoDB Atlas account (or local MongoDB instance)
+- PostgreSQL
 - Git
