@@ -8,7 +8,7 @@ const mockUserFind = jest.fn();
 const mockRequestCreate = jest.fn();
 const mockRequestFindAll = jest.fn();
 const mockRequestFindByPk = jest.fn();
-jest.mock('../models/User', () => ({ findByPk: mockUserFind }));
+jest.mock('../models/User', () => ({ findByPk: mockUserFind, hasMany: jest.fn() }));
 jest.mock('../models/Request', () => ({ create: mockRequestCreate, findAll: mockRequestFindAll, findByPk: mockRequestFindByPk }));
 
 const app = require('../app');
