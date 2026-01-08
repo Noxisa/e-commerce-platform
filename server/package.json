@@ -25,6 +25,7 @@
     "@ljharb/tsconfig": "^0.3.2",
     "jest": "^29.0.0",
     "nodemon": "^3.1.10",
-    "supertest": "^6.3.0"
+    "supertest": "^6.3.0",
+    "sqlite3": "^5.1.6"
   }
 }
