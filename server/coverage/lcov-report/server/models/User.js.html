@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">28% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/9</span>
+                <span class='fraction'>7/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">31.81% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/9</span>
+                <span class='fraction'>7/22</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -112,7 +112,28 @@
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,13 +173,34 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const { DataTypes } = require('sequelize');
@@ -176,10 +218,11 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  isAdmin: {
-    type: DataTypes.BOOLEAN,
+  role: {
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: false,
+    defaultValue: 'customer',
+    validate: { isIn: [['customer', 'admin']] },
   },
   isVerified: {
     type: DataTypes.BOOLEAN,
@@ -190,10 +233,9 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  role: {
+  adminPassword: {
     type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: 'user',
+    allowNull: true,
   },
 }, {
   hooks: {
@@ -201,14 +243,35 @@ const User = sequelize.define('User', {
 <span class="cstat-no" title="statement not covered" >      if (user.password) {</span>
 <span class="cstat-no" title="statement not covered" >        user.password = await bcrypt.hash(user.password, 10);</span>
       }
+<span class="cstat-no" title="statement not covered" >      if (user.adminPassword) {</span>
+<span class="cstat-no" title="statement not covered" >        user.adminPassword = await bcrypt.hash(user.adminPassword, 10);</span>
+      }
     },
     beforeUpdate: <span class="fstat-no" title="function not covered" >as</span>ync (user) =&gt; {
 <span class="cstat-no" title="statement not covered" >      if (user.changed('password')) {</span>
 <span class="cstat-no" title="statement not covered" >        user.password = await bcrypt.hash(user.password, 10);</span>
       }
+<span class="cstat-no" title="statement not covered" >      if (user.changed('adminPassword')) {</span>
+<span class="cstat-no" title="statement not covered" >        user.adminPassword = await bcrypt.hash(user.adminPassword, 10);</span>
+      }
     },
   },
 });
+&nbsp;
+// Instance method to compare regular password
+User.prototype.comparePassword = <span class="fstat-no" title="function not covered" >fu</span>nction (plainPassword) {
+<span class="cstat-no" title="statement not covered" >  return bcrypt.compare(plainPassword, this.password);</span>
+};
+&nbsp;
+// Instance method to verify admin credentials: requires both regular password and adminPassword
+User.prototype.verifyAdminCredentials = <span class="fstat-no" title="function not covered" >as</span>ync function (plainPassword, plainAdminPassword) {
+<span class="cstat-no" title="statement not covered" >  if (this.role !== 'admin') <span class="cstat-no" title="statement not covered" >return false;</span></span>
+  const regularOk = <span class="cstat-no" title="statement not covered" >await bcrypt.compare(plainPassword, this.password);</span>
+<span class="cstat-no" title="statement not covered" >  if (!regularOk) <span class="cstat-no" title="statement not covered" >return false;</span></span>
+<span class="cstat-no" title="statement not covered" >  if (!this.adminPassword) <span class="cstat-no" title="statement not covered" >return false;</span></span>
+  const adminOk = <span class="cstat-no" title="statement not covered" >await bcrypt.compare(plainAdminPassword, this.adminPassword);</span>
+<span class="cstat-no" title="statement not covered" >  return regularOk &amp;&amp; adminOk;</span>
+};
 &nbsp;
 module.exports = User;</pre></td></tr></table></pre>
 
@@ -217,7 +280,7 @@ module.exports = User;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-12-26T14:26:06.617Z
+                at 2026-01-08T18:42:16.912Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

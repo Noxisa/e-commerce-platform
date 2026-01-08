@@ -1,35 +1,39 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
 
-const ALLOWED_WOOD = ['oak', 'pine', 'walnut', 'cherry', 'maple'];
 const ALLOWED_CATEGORIES = ['chair', 'table', 'cabinet', 'bed', 'shelf'];
+const ALLOWED_WOODS = ['oak', 'pine', 'walnut', 'cherry', 'maple'];
 
 const Product = sequelize.define('Product', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: { notEmpty: true },
   },
+
   category: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: { isIn: [ALLOWED_CATEGORIES] },
   },
+
   description: {
     type: DataTypes.TEXT,
     allowNull: false,
+    validate: { notEmpty: true },
   },
+
   basePrice: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
     validate: {
       isDecimal: true,
-      minValue(value) {
-        if (Number(value) <= 0) {
-          throw new Error('basePrice must be a positive number');
-        }
+      isPositive(value) {
+        if (Number(value) <= 0) throw new Error('basePrice must be a positive number');
       },
     },
   },
+
   availableWoodTypes: {
     type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false,
@@ -37,58 +41,44 @@ const Product = sequelize.define('Product', {
     validate: {
       isAllowed(list) {
         if (!Array.isArray(list)) throw new Error('availableWoodTypes must be an array');
-        const invalid = list.filter((w) => !ALLOWED_WOOD.includes(w));
-        if (invalid.length) throw new Error(`Invalid wood types: ${invalid.join(', ')}`);
+        for (const w of list) {
+          if (!ALLOWED_WOODS.includes(w)) throw new Error(`Invalid wood type: ${w}`);
+        }
       },
     },
   },
+
   variants: {
     type: DataTypes.JSONB,
     allowNull: false,
     defaultValue: [],
     validate: {
-      isArrayOfVariants(value) {
+      isVariantArray(value) {
         if (!Array.isArray(value)) throw new Error('variants must be an array');
-        value.forEach((v) => {
+        for (const v of value) {
           if (typeof v !== 'object' || v === null) throw new Error('each variant must be an object');
-          if (!('name' in v)) throw new Error('variant missing name');
-          if (!('priceModifier' in v)) throw new Error('variant missing priceModifier');
+          if (!('name' in v)) throw new Error('each variant must have a name');
+          if (!('priceModifier' in v)) throw new Error('each variant must have a priceModifier');
           const num = Number(v.priceModifier);
-          if (Number.isNaN(num)) throw new Error('variant priceModifier must be a number');
-        });
+          if (Number.isNaN(num)) throw new Error('priceModifier must be numeric');
+        }
       },
     },
   },
+
   imageUrl: {
     type: DataTypes.STRING,
     allowNull: true,
   },
+
   isActive: {
     type: DataTypes.BOOLEAN,
+    allowNull: false,
     defaultValue: true,
   },
 }, {
+  tableName: 'Products',
   timestamps: true,
-});
-
-module.exports = Product;
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
-
-// Product model with flexible variants and wood types
-const Product = sequelize.define('Product', {
-  name: { type: DataTypes.STRING, allowNull: false },
-  description: { type: DataTypes.TEXT },
-  // Supported wood types for this product (stored as JSON array)
-  woodTypes: { type: DataTypes.JSON, allowNull: true },
-  // Variants example: [{ id: 'small', label: 'Small', sku: 'S-001', price: 250.00 }]
-  variants: { type: DataTypes.JSON, allowNull: true },
-  // Base price (optional) and price metadata
-  basePrice: { type: DataTypes.DECIMAL(10,2), allowNull: true },
-  // images: array of image urls
-  images: { type: DataTypes.JSON, allowNull: true },
-  // Active flag
-  isActive: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
 });
 
 module.exports = Product;
