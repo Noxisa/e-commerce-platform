@@ -32,6 +32,11 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  // refreshToken stored for issuing new access tokens via refresh flow
+  refreshToken: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   hooks: {
     beforeCreate: async (user) => {
