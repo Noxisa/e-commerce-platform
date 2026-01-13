@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@express-rate-limit/tsconfig": "^1.0.2",
     "@ljharb/tsconfig": "^0.3.2"
   }
 }
