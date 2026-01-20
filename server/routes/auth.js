@@ -110,22 +110,22 @@ router.post('/login', loginValidators, async (req, res) => {
     if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
   } else {
     if (!email || !email.includes('@') || !password) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ error: 'Invalid email or password' });
     }
   }
 
   try {
     const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(400).json({ error: 'Invalid credentials' });
-
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(400).json({ error: 'Invalid credentials' });
+    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
 
     if (!user.isVerified) {
-      return res.status(403).json({ error: 'Email not verified' });
+      return res.status(403).json({ error: 'Please verify your email before logging in' });
     }
 
-    const accessToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: ACCESS_TOKEN_EXPIRES_IN });
+    const match = await user.comparePassword(password);
+    if (!match) return res.status(401).json({ error: 'Invalid email or password' });
+
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
     const refreshToken = crypto.randomBytes(40).toString('hex');
 
     // Persist refresh token to the user record. (Single active refresh token per user.)
@@ -138,11 +138,69 @@ router.post('/login', loginValidators, async (req, res) => {
       }
     }
 
-    res.cookie('accessToken', accessToken, { ...COOKIE_OPTIONS, maxAge: 1000 * 60 * 15 });
+    res.cookie('accessToken', token, { ...COOKIE_OPTIONS, maxAge: 1000 * 60 * 60 * 24 * 7 });
     res.cookie('refreshToken', refreshToken, { ...COOKIE_OPTIONS, maxAge: 1000 * 60 * 60 * 24 * 7 });
 
-    // return token in body for compatibility
-    res.json({ token: accessToken, message: 'Logged in' });
+    res.status(200).json({ token, user: { id: user.id, email: user.email, role: user.role } });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Admin login endpoint: Two-step admin authentication
+const adminLoginValidators = bodyValidator
+  ? [
+      bodyValidator('email').isEmail().withMessage('Invalid email'),
+      bodyValidator('password').exists().withMessage('Password required'),
+      bodyValidator('adminPassword').exists().withMessage('Admin password required'),
+    ]
+  : [];
+
+router.post('/admin-login', adminLoginValidators, async (req, res) => {
+  const { email, password, adminPassword } = req.body || {};
+
+  if (validationResult) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  } else {
+    if (!email || !email.includes('@') || !password || !adminPassword) {
+      return res.status(400).json({ error: 'Invalid credentials' });
+    }
+  }
+
+  try {
+    const user = await User.findOne({ where: { email } });
+    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
+
+    if (user.role !== 'admin') {
+      return res.status(403).json({ error: 'User does not have admin privileges' });
+    }
+
+    const verified = await user.verifyAdminCredentials(password, adminPassword);
+    if (!verified) return res.status(401).json({ error: 'Invalid email or password' });
+
+    if (!user.isVerified) {
+      return res.status(403).json({ error: 'Please verify your email before logging in' });
+    }
+
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    const refreshToken = crypto.randomBytes(40).toString('hex');
+
+    // Persist refresh token to the user record.
+    if (user && typeof user.save === 'function') {
+      user.refreshToken = refreshToken;
+      await user.save();
+    } else if (user && user.id) {
+      if (process.env.NODE_ENV !== 'test') {
+        await User.update({ refreshToken }, { where: { id: user.id } });
+      }
+    }
+
+    res.cookie('accessToken', token, { ...COOKIE_OPTIONS, maxAge: 1000 * 60 * 60 * 24 * 7 });
+    res.cookie('refreshToken', refreshToken, { ...COOKIE_OPTIONS, maxAge: 1000 * 60 * 60 * 24 * 7 });
+
+    res.status(200).json({ token, user: { id: user.id, email: user.email, role: user.role } });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });

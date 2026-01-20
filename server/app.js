@@ -72,7 +72,7 @@ app.use('/api/auth/login', loginLimiter);
 app.use('/api/auth/signup', signupLimiter);
 
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/orders', require('./routes/order'));
+app.use('/api/requests', require('./routes/requests'));
 app.use('/api/products', require('./routes/products'));
 
 module.exports = app;
