@@ -73,36 +73,7 @@ To: const { auth } = require('../middleware/auth');
 - availableWoodTypes must be subset of: oak, pine, walnut, cherry, maple
 - variants priceModifier can be positive (add cost) or negative (discount)
 
-#### 1.4 Update Request Model (formerly Order)
-
-**Rename file: server/models/Order.js → server/models/Request.js**
-**Update model name from 'Order' to 'Request'**
-
-**Update fields:**
-
-- Keep: furnitureType, woodType, dimensions, notes, userEmail
-- Add: `productId` - DataTypes.INTEGER, allowNull: false, references Product model
-- Add: `productName` - DataTypes.STRING (denormalized for history)
-- Add: `selectedVariants` - DataTypes.JSONB, defaultValue: [] (array of variant names selected)
-- Add: `basePrice` - DataTypes.DECIMAL(10,2) (denormalized price at time of request)
-- Add: `totalPrice` - DataTypes.DECIMAL(10,2) (calculated: basePrice + variant modifiers)
-- Add: `phoneNumber` - DataTypes.STRING, allowNull: false
-- Add: `preferredDeliveryDate` - DataTypes.DATE, allowNull: true
-- Add: `status` - DataTypes.STRING, defaultValue: 'pending', validate: isIn(['pending', 'contacted', 'in\_progress', 'completed', 'cancelled'])
-- Add: `adminNotes` - DataTypes.TEXT, allowNull: true (for admin to add notes)
-
-**Relations:**
-
-- belongsTo Product (foreign key: productId)
-- belongsTo User (foreign key via userEmail - keep existing pattern)
-
-**Update file: server/routes/order.js → server/routes/requests.js**
-
-- Update all references from Order to Request model
-- Update endpoint from POST `/` to POST `/`
-- Keep auth middleware requirement
-
-#### 1.5 Authentication Endpoints
+#### 1.4 Authentication Endpoints
 
 **File: server/routes/auth.js**
 
@@ -113,24 +84,6 @@ To: const { auth } = require('../middleware/auth');
 - email (required, valid email format)
 - password (required, min 6 chars)
 
-**Implementation:**
-
-1. Validate input (use express-validator or manual checks)
-2. Find user by email using `User.findOne({ where: { email } })`
-3. If user not found: Return 401 with error: "Invalid email or password"
-4. Check if user.isVerified === false: Return 403 with error: "Please verify your email before logging in"
-5. Use user.comparePassword(password) to verify
-6. If password incorrect: Return 401 with error: "Invalid email or password"
-7. Generate JWT token with {userId: user.id, role: user.role}, expiresIn: '7d'
-8. Return 200 with: {token, user: {id: user.id, email: user.email, role: user.role}}
-
-**Add POST&#32;`/api/auth/admin-login`&#32;endpoint:**
-**Purpose:** Two-step admin authentication
-**Request body:**
-
-- email (required)
-- password (required - regular password)
-- adminPassword (required - special admin password)
 
 **Implementation:**
 
