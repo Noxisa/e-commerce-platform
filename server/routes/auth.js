@@ -171,20 +171,23 @@ router.post('/admin-login', adminLoginValidators, async (req, res) => {
 
   try {
     const user = await User.findOne({ where: { email } });
-    if (!user) return res.status(401).json({ error: 'Invalid email or password' });
+    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
     if (user.role !== 'admin') {
-      return res.status(403).json({ error: 'User does not have admin privileges' });
+      return res.status(403).json({ error: 'Admin access required' });
     }
 
-    const verified = await user.verifyAdminCredentials(password, adminPassword);
-    if (!verified) return res.status(401).json({ error: 'Invalid email or password' });
+    const regularPasswordMatch = await user.comparePassword(password);
+    if (!regularPasswordMatch) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const adminPasswordMatch = await bcrypt.compare(adminPassword, user.adminPassword);
+    if (!adminPasswordMatch) return res.status(401).json({ error: 'Invalid admin credentials' });
 
     if (!user.isVerified) {
       return res.status(403).json({ error: 'Please verify your email before logging in' });
     }
 
-    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ userId: user.id, role: 'admin', isAdmin: true }, process.env.JWT_SECRET, { expiresIn: '7d' });
     const refreshToken = crypto.randomBytes(40).toString('hex');
 
     // Persist refresh token to the user record.
@@ -200,7 +203,7 @@ router.post('/admin-login', adminLoginValidators, async (req, res) => {
     res.cookie('accessToken', token, { ...COOKIE_OPTIONS, maxAge: 1000 * 60 * 60 * 24 * 7 });
     res.cookie('refreshToken', refreshToken, { ...COOKIE_OPTIONS, maxAge: 1000 * 60 * 60 * 24 * 7 });
 
-    res.status(200).json({ token, user: { id: user.id, email: user.email, role: user.role } });
+    res.status(200).json({ token, user: { id: user.id, email: user.email, role: 'admin' } });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -252,6 +255,39 @@ router.post('/logout', async (req, res) => {
   }
 });
 
+// Verify email endpoint: verify email with token from email link
+const verifyEmailValidators = bodyValidator
+  ? [bodyValidator('token').exists().withMessage('Token is required')]
+  : [];
+
+router.post('/verify-email', verifyEmailValidators, async (req, res) => {
+  const { token } = req.body || {};
+
+  if (validationResult) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+  } else {
+    if (!token || typeof token !== 'string') {
+      return res.status(400).json({ error: 'Token is required' });
+    }
+  }
+
+  try {
+    const user = await User.findOne({ where: { verificationToken: token } });
+    if (!user) return res.status(400).json({ error: 'Invalid token' });
+
+    user.isVerified = true;
+    user.verificationToken = null;
+    await user.save();
+
+    res.status(200).json({ message: 'Email verified successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Legacy endpoint: verify email via GET parameter
 router.get('/verify/:token', async (req, res) => {
   const { token } = req.params;
   try {
