@@ -73,36 +73,7 @@ To: const { auth } = require('../middleware/auth');
 - availableWoodTypes must be subset of: oak, pine, walnut, cherry, maple
 - variants priceModifier can be positive (add cost) or negative (discount)
 
-#### 1.4 Update Request Model (formerly Order)
-
-**Rename file: server/models/Order.js → server/models/Request.js**
-**Update model name from 'Order' to 'Request'**
-
-**Update fields:**
-
-- Keep: furnitureType, woodType, dimensions, notes, userEmail
-- Add: `productId` - DataTypes.INTEGER, allowNull: false, references Product model
-- Add: `productName` - DataTypes.STRING (denormalized for history)
-- Add: `selectedVariants` - DataTypes.JSONB, defaultValue: [] (array of variant names selected)
-- Add: `basePrice` - DataTypes.DECIMAL(10,2) (denormalized price at time of request)
-- Add: `totalPrice` - DataTypes.DECIMAL(10,2) (calculated: basePrice + variant modifiers)
-- Add: `phoneNumber` - DataTypes.STRING, allowNull: false
-- Add: `preferredDeliveryDate` - DataTypes.DATE, allowNull: true
-- Add: `status` - DataTypes.STRING, defaultValue: 'pending', validate: isIn(['pending', 'contacted', 'in\_progress', 'completed', 'cancelled'])
-- Add: `adminNotes` - DataTypes.TEXT, allowNull: true (for admin to add notes)
-
-**Relations:**
-
-- belongsTo Product (foreign key: productId)
-- belongsTo User (foreign key via userEmail - keep existing pattern)
-
-**Update file: server/routes/order.js → server/routes/requests.js**
-
-- Update all references from Order to Request model
-- Update endpoint from POST `/` to POST `/`
-- Keep auth middleware requirement
-
-#### 1.5 Authentication Endpoints
+#### 1.4 Authentication Endpoints
 
 **File: server/routes/auth.js**
 
