@@ -113,24 +113,6 @@ To: const { auth } = require('../middleware/auth');
 - email (required, valid email format)
 - password (required, min 6 chars)
 
-**Implementation:**
-
-1. Validate input (use express-validator or manual checks)
-2. Find user by email using `User.findOne({ where: { email } })`
-3. If user not found: Return 401 with error: "Invalid email or password"
-4. Check if user.isVerified === false: Return 403 with error: "Please verify your email before logging in"
-5. Use user.comparePassword(password) to verify
-6. If password incorrect: Return 401 with error: "Invalid email or password"
-7. Generate JWT token with {userId: user.id, role: user.role}, expiresIn: '7d'
-8. Return 200 with: {token, user: {id: user.id, email: user.email, role: user.role}}
-
-**Add POST&#32;`/api/auth/admin-login`&#32;endpoint:**
-**Purpose:** Two-step admin authentication
-**Request body:**
-
-- email (required)
-- password (required - regular password)
-- adminPassword (required - special admin password)
 
 **Implementation:**
 
