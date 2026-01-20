@@ -6,28 +6,8 @@ Building a complete e-commerce platform for custom wooden furniture where custom
 
 **Create new file: server/middleware/auth.js**
 **Purpose:** Centralize authentication middleware
-**Implementation:**
 
-- Move auth middleware from server.js (lines 78-101) to this file
-- Export as `auth` function
-- Add new `adminAuth` middleware that checks for admin role
-- `adminAuth` implementation:
-- First calls auth() to verify JWT
-- Then checks if req.userId exists
-- Queries User model to check if user has admin role
-- Returns 403 if not admin with error: "Admin access required"
-
-**Update: server/routes/order.js**
-**Line 6:** Change import
-
-```
-From: const { auth } = require('../middleware/auth');
-To: const { auth } = require('../middleware/auth');
-```
-
-(This will now work correctly after creating middleware directory)
-
-#### 1.2 Update User Model
+#### 1.1 Update User Model
 
 **File: server/models/User.js**
 **Add new fields after password field (line 15):**
