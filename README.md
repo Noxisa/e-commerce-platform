@@ -1,96 +1,99 @@
 🪵 FurniWood
 
-FurniWood is a modern and responsive web platform for ordering custom-made wooden furniture. The project is designed for users who value high-quality craftsmanship and want an easy, pleasant online shopping experience on both desktop and mobile devices.
+FurniWood is a modern, responsive e-commerce platform for ordering custom-made wooden furniture.
+It focuses on simplicity, clarity, and comfort, making online furniture shopping easy on desktop, tablet, and mobile devices.
 
-The application focuses on a clean, minimalist design, fast performance, and ease of use, making it accessible even for users with little technical experience.
+The project combines a clean, minimalist design with fast performance and an intuitive user experience.
 
-💡 Project Idea
+🌱 About the Project
 
-The main goal of FurniWood is to provide a personalized and user-friendly shopping experience for customers looking for unique wooden furniture.
+The idea behind FurniWood is to create a place where customers can easily find and order unique wooden furniture tailored to their needs.
 
-With FurniWood, users can:
+Users can:
 
-browse available furniture products,
+browse furniture products,
 
-explore different wood types and product variants,
+explore different wood types and variants,
 
-send inquiries for custom-made furniture,
+request custom-made furniture,
 
-create an account and manage their personal data.
+manage their account in a simple and secure way.
 
-The platform is built to be:
+The platform is designed to be:
 
-intuitive and easy to use,
+easy to understand, even for non-technical users,
 
 visually clean and modern,
 
-optimized for all screen sizes.
+fully responsive across all devices.
 
-✨ Features
-🛋️ Product Catalog
+✨ Key Features
+🛋️ Furniture Catalog
 
-Browse a selection of wooden furniture (e.g. oak tables, cherry bookshelves).
+Browse a variety of wooden furniture (e.g. oak tables, cherry bookshelves)
 
-View details such as wood type, available variants, and pricing.
+Clear product details: wood type, variants, and pricing
 
-📝 Custom Order Form
+📝 Custom Order Requests
 
-Submit inquiries for custom furniture orders.
+Submit custom furniture inquiries
 
-Specify wood type, dimensions, and additional notes.
+Define dimensions, wood type, and additional notes
 
 👤 User Accounts
 
-Register and log in using email and password.
+User registration and login with email and password
 
-Optional Google login (server-side integration).
+Optional Google authentication (backend support)
 
-Secure storage of user data.
+Secure handling of user data
 
-📱 Responsive Design
+📱 Responsive & Mobile-Friendly
 
-Fully adapted for mobile phones, tablets, and desktop screens.
+Optimized for phones, tablets, and desktops
 
-Works well on small screens and split-screen views.
+Works well on small screens and split-screen layouts
 
 ♿ Accessibility
 
-Mobile-friendly navigation with a hamburger menu.
+Mobile hamburger menu
 
-Keyboard support and screen-reader-friendly structure.
+Keyboard navigation support
+
+Screen-reader-friendly structure
 
 ⚡ Performance
 
-Fast page loading.
+Fast loading times
 
-Optimized forms and efficient communication with the server.
+Optimized forms and API communication
 
-🛠️ Technologies Used
+🛠️ Tech Stack
 Frontend
 
 React 18
 
-React Router (navigation)
+React Router – navigation
 
-Yup (form validation)
+Yup – form validation
 
-Axios (API communication)
+Axios – API communication
 
-DOMPurify (XSS protection)
+DOMPurify – XSS protection
 
-CSS (responsive layout and variables)
+CSS – responsive layout & variables
 
 Backend
 
 Node.js + Express
 
-PostgreSQL (relational database)
+PostgreSQL – relational database
 
-JSON Web Token (JWT) for authentication
+JWT – authentication
 
-Bcrypt (password encryption)
+Bcrypt – password hashing
 
-Nodemailer (email notifications)
+Nodemailer – email notifications
 
 CORS
 
@@ -100,32 +103,29 @@ npm
 
 Git & GitHub
 
-🚀 Installation (Short Version)
+🚀 Getting Started
+Prerequisites
 
-Install Node.js (v18 or higher)
+Node.js v18+
 
-Set up a PostgreSQL database
+PostgreSQL database
 
-Clone the repository:
-
+Installation
 git clone https://github.com/your-username/furniwood.git
-
-
-Install dependencies:
-
+cd furniwood
 npm install
-
-
-Run the project:
-
 npm run dev
 
 📌 Project Status
 
-This project is under active development and is part of a personal portfolio, showcasing skills in:
+🚧 In progress
 
-web application development,
+This project is part of a personal portfolio and demonstrates skills in:
 
-user interface design,
+full-stack web development,
 
-backend logic and database management.
+UI/UX-focused design,
+
+backend development with relational databases,
+
+authentication and security basics.
