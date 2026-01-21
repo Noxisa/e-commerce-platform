@@ -4,34 +4,6 @@
 
 Building a complete e-commerce platform for custom wooden furniture where customers can browse products, select wood types and variants, and submit requests to the company. The system includes an admin panel for managing products and customer requests. This is NOT a traditional order system - customers send requests with their selections, and the company contacts them directly to finalize pricing and deadlines.
 
-**Implementation:**
-
-1. Validate input
-2. Find user by email
-3. If user not found: Return 401 with error: "Invalid credentials"
-4. Check if user.role !== 'admin': Return 403 with error: "Admin access required"
-5. Verify regular password using comparePassword()
-6. If regular password incorrect: Return 401 with error: "Invalid credentials"
-7. Use bcrypt.compare(adminPassword, user.adminPassword) to verify admin password
-8. If admin password incorrect: Return 401 with error: "Invalid admin credentials"
-9. Generate JWT token with {userId: user.id, role: 'admin', isAdmin: true}, expiresIn: '7d'
-10. Return 200 with: {token, user: {id: user.id, email: user.email, role: 'admin'}}
-
-**Add POST&#32;`/api/auth/verify-email`&#32;endpoint:**
-**Purpose:** Verify email with token from email link
-**Request body:**
-
-- token (required, string)
-
-**Implementation:**
-
-1. Find user by verificationToken using `User.findOne({ where: { verificationToken: token } })`
-2. If not found: Return 400 with error: "Invalid or expired verification token"
-3. Update user: isVerified = true, verificationToken = null
-4. Save user
-5. Return 200 with: {message: "Email verified successfully"}
-
-**Update POST&#32;`/api/auth/signup`&#32;endpoint (existing):**
 **Add after user creation (before line 16):**
 
 1. Generate verification token using crypto.randomBytes(32).toString('hex')
