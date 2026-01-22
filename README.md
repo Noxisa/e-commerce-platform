@@ -4,40 +4,6 @@
 
 Building a complete e-commerce platform for custom wooden furniture where customers can browse products, select wood types and variants, and submit requests to the company. The system includes an admin panel for managing products and customer requests. This is NOT a traditional order system - customers send requests with their selections, and the company contacts them directly to finalize pricing and deadlines.
 
-**Add after user creation (before line 16):**
-
-1. Generate verification token using crypto.randomBytes(32).toString('hex')
-2. Set user.verificationToken = token
-3. Set user.isVerified = false
-4. Save user
-5. Send verification email using nodemailer (transporter already exists in server.js lines 104-130)
-6. Email should contain link: `http://localhost:3000/verify-email?token=${token}`
-7. Email subject: "Verify your email - Furniture Shop"
-8. Email body: "Click the link to verify your email: [link]. Token expires in 24 hours."
-
-**Response change:**
-
-- Return: {message: "Registration successful. Please check your email to verify your account.", userId: user.id}
-- Do NOT return token immediately (user must verify first)
-
-#### 1.6 Product Management Endpoints
-
-**Create new file: server/routes/products.js**
-**Purpose:** CRUD operations for products (admin) and listing (public)
-
-**Mount in server.js after line 35:**
-
-```
-app.use('/api/products', require('./routes/products'));
-```
-
-**GET&#32;`/api/products`&#32;- List all active products**
-**Auth:** None required (public endpoint)
-**Query parameters:**
-
-- category (optional, string) - filter by furniture category
-- search (optional, string) - search in name and description
-- sort (optional, string) - 'price\_asc', 'price\_desc', 'name\_asc', 'name\_desc', default: 'name\_asc'
 
 **Implementation:**
 
