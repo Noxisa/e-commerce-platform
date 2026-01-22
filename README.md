@@ -79,7 +79,7 @@ npm install
 npm run dev
 ```
 
-📌 Project Status
+## 📌 Project Status
 🚧 Work in progress (as of January 2026)
 This is a portfolio project showcasing:
 
@@ -90,7 +90,7 @@ Responsive & accessible frontend
 REST API design & frontend-backend integration
 
 Feedback, suggestions and constructive criticism are very welcome!
-📬 Get in Touch
+## 📬 Get in Touch
 Open to collaboration, freelance opportunities or job discussions.
 
 LinkedIn → linkedin.com/in/YOUR-PROFILE
