@@ -1,131 +1,81 @@
-🪵 FurniWood
+# 🪵 FurniWood – Custom Wooden Furniture E-commerce
 
-FurniWood is a modern, responsive e-commerce platform for ordering custom-made wooden furniture.
-It focuses on simplicity, clarity, and comfort, making online furniture shopping easy on desktop, tablet, and mobile devices.
+Modernna, responsywna platforma do zamawiania mebli na wymiar z drewna. Prosta, czytelna i przyjemna w obsłudze – zarówno na komputerze, tablecie, jak i telefonie.
 
-The project combines a clean, minimalist design with fast performance and an intuitive user experience.
+<p align="center">
+  <img src="https://via.placeholder.com/800x400.png?text=FurniWood+Hero+Screenshot" alt="FurniWood – widok główny" width="800"/>
+  <br/>
+  <em>Strona główna – minimalistyczny i ciepły design</em>
+</p>
 
-🌱 About the Project
+## 🌟 O projekcie
 
-The idea behind FurniWood is to create a place where customers can easily find and order unique wooden furniture tailored to their needs.
+FurniWood powstał z myślą o osobach, które szukają **unikalnych, drewnianych mebli szytych na miarę** – bez zbędnego scrollowania i skomplikowanych konfiguratorów.
 
-Users can:
+Główne możliwości dla użytkownika:
+- Przeglądanie gotowych produktów z dokładnymi informacjami
+- Wybór rodzaju drewna, wybarwienia i wariantów
+- Składanie zapytań o meble **na wymiar** (wymiary + notatki)
+- Proste i bezpieczne konto użytkownika
 
-browse furniture products,
+Platforma jest zaprojektowana tak, aby była:
+- zrozumiała nawet dla osób nietechnicznych
+- estetyczna i nowoczesna
+- w 100% responsywna (mobile-first)
 
-explore different wood types and variants,
+## ✨ Główne funkcjonalności
 
-request custom-made furniture,
+| Ikona      | Funkcja                        | Opis                                                                 |
+|------------|--------------------------------|----------------------------------------------------------------------|
+| 🛋️        | Katalog mebli                  | Przeglądanie produktów z filtrami (dąb, wiśnia, jesion itd.)        |
+| 📝        | Zapytania o meble na wymiar    | Formularz z wymiarami, wyborem drewna, kolorem i dodatkowymi uwagami |
+| 👤        | Konto użytkownika              | Rejestracja / logowanie (email + hasło), opcjonalnie Google         |
+| 📱        | Pełna responsywność            | Idealnie wygląda na telefonach, tabletach i desktopach              |
+| ♿        | Dostępność (accessibility)     | Hamburger menu, nawigacja klawiaturą, struktura przyjazna czytnikom ekranu |
+| ⚡        | Wydajność                      | Szybkie ładowanie, zoptymalizowane zapytania API                    |
 
-manage their account in a simple and secure way.
+## 🛠️ Technologie
 
-The platform is designed to be:
+| Część       | Technologia / Narzędzie              | Wersja / Uwagi                  |
+|-------------|--------------------------------------|---------------------------------|
+| Frontend    | React 18                             | Hooks, Context / Redux (opcjonalnie) |
+| Routing     | React Router v6                      |                                 |
+| Walidacja   | Yup + Formik / React Hook Form       |                                 |
+| API         | Axios                                | Interceptors, error handling    |
+| Bezpieczeństwo | DOMPurify                         | Ochrona przed XSS               |
+| Styling     | CSS (variables + responsive)         | Bez frameworków typu Tailwind   |
+| Backend     | Node.js + Express                    | REST API                        |
+| Baza danych | PostgreSQL                           | Relacyjna, migracje             |
+| Autentykacja| JWT + Bcrypt                         | Hashowanie haseł                |
+| E-maile     | Nodemailer                           | Powiadomienia o zapytaniach     |
+| Inne        | CORS, npm, Git, GitHub               |                                 |
 
-easy to understand, even for non-technical users,
+<p align="center">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"/>
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens" alt="JWT"/>
+</p>
 
-visually clean and modern,
+## 🚀 Jak uruchomić projekt lokalnie
 
-fully responsive across all devices.
+### Wymagania
+- Node.js ≥ 18
+- PostgreSQL (lokalnie lub w kontenerze)
 
-✨ Key Features
-🛋️ Furniture Catalog
+### Instalacja
 
-Browse a variety of wooden furniture (e.g. oak tables, cherry bookshelves)
-
-Clear product details: wood type, variants, and pricing
-
-📝 Custom Order Requests
-
-Submit custom furniture inquiries
-
-Define dimensions, wood type, and additional notes
-
-👤 User Accounts
-
-User registration and login with email and password
-
-Optional Google authentication (backend support)
-
-Secure handling of user data
-
-📱 Responsive & Mobile-Friendly
-
-Optimized for phones, tablets, and desktops
-
-Works well on small screens and split-screen layouts
-
-♿ Accessibility
-
-Mobile hamburger menu
-
-Keyboard navigation support
-
-Screen-reader-friendly structure
-
-⚡ Performance
-
-Fast loading times
-
-Optimized forms and API communication
-
-🛠️ Tech Stack
-Frontend
-
-React 18
-
-React Router – navigation
-
-Yup – form validation
-
-Axios – API communication
-
-DOMPurify – XSS protection
-
-CSS – responsive layout & variables
-
-Backend
-
-Node.js + Express
-
-PostgreSQL – relational database
-
-JWT – authentication
-
-Bcrypt – password hashing
-
-Nodemailer – email notifications
-
-CORS
-
-Tools
-
-npm
-
-Git & GitHub
-
-🚀 Getting Started
-Prerequisites
-
-Node.js v18+
-
-PostgreSQL database
-
-Installation
-git clone https://github.com/your-username/furniwood.git
+```bash
+# Klonowanie repozytorium
+git clone https://github.com/TWOJA_NAZWA_UZYTKOWNIKA/furniwood.git
 cd furniwood
+
+# Instalacja zależności (frontend + backend w monorepo lub osobno)
 npm install
+
+# Uruchomienie trybu developerskiego
 npm run dev
-
-📌 Project Status
-
-🚧 In progress
-
-This project is part of a personal portfolio and demonstrates skills in:
-
-full-stack web development,
-
-UI/UX-focused design,
-
-backend development with relational databases,
-
-authentication and security basics.
+# lub osobno:
+# cd client && npm run dev
+# cd server && npm run dev
