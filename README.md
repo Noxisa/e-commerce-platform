@@ -77,3 +77,24 @@ npm install
 
 # Start development server
 npm run dev
+```
+
+📌 Project Status
+🚧 Work in progress (as of January 2026)
+This is a portfolio project showcasing:
+
+Full-stack development (React + Node.js + PostgreSQL)
+Clean UI/UX design with focus on simplicity
+Secure authentication & data handling
+Responsive & accessible frontend
+REST API design & frontend-backend integration
+
+Feedback, suggestions and constructive criticism are very welcome!
+📬 Get in Touch
+Open to collaboration, freelance opportunities or job discussions.
+
+LinkedIn → linkedin.com/in/YOUR-PROFILE
+Email    → your.email@example.com
+
+Feel free to open an issue or discussion in the repo.
+⭐ If you find the project interesting — give it a star!
