@@ -69,27 +69,7 @@ Building a complete e-commerce platform for custom wooden furniture where custom
 2. Create product with Product.create()
 3. Return 201 with created product
 
-**Response 201:** Created product object
 
-**Error responses:**
-
-- 400 if validation fails (return first error): {error: "Validation error message"}
-- 403 if not admin: {error: "Admin access required"}
-
-**PATCH&#32;`/api/products/:id`&#32;- Update existing product**
-**Auth:** adminAuth middleware required
-**Request body:** Same as POST, all fields optional
-**Implementation:**
-
-1. Find product by id (include inactive products for admin)
-2. If not found: Return 404 with error: "Product not found"
-3. Update only provided fields
-4. Validate updated fields same as POST
-5. Save product
-6. Return 200 with updated product
-
-**DELETE&#32;`/api/products/:id`&#32;- Soft delete product**
-**Auth:** adminAuth middleware required
 **Implementation:**
 
 1. Find product by id
@@ -98,73 +78,6 @@ Building a complete e-commerce platform for custom wooden furniture where custom
 4. Save product
 5. Return 200 with message: "Product deleted successfully"
 
-**Note:** Soft delete preserves product data for historical requests
-
-#### 1.7 Request Management Endpoints
-
-**Update file: server/routes/requests.js** (renamed from order.js)
-
-**GET&#32;`/api/requests`&#32;- List user's requests (or all for admin)**
-**Auth:** auth middleware required
-**Implementation:**
-
-1. Check if req.user has role 'admin' (need to modify auth middleware to attach full user object)
-2. If admin: Return all requests with include: [Product, User]
-3. If regular user: Return only where: {userEmail: user.email}
-4. Sort by createdAt DESC
-5. Return array with populated product and user data
-
-**Response 200:**
-
-```json
-{
-  "requests": [
-    {
-      "id": 1,
-      "productName": "Classic Wooden Chair",
-      "woodType": "oak",
-      "selectedVariants": ["With Armrests"],
-      "basePrice": 1200.00,
-      "totalPrice": 1400.00,
-      "phoneNumber": "+48123456789",
-      "preferredDeliveryDate": "2025-02-15",
-      "dimensions": "Custom height: 95cm",
-      "notes": "Please use darker oak stain",
-      "status": "pending",
-      "userEmail": "user@example.com",
-      "createdAt": "2025-01-18T10:00:00Z",
-      "Product": { "id": 1, "name": "Classic Wooden Chair", "category": "chair" }
-    }
-  ]
-}
-```
-
-**POST&#32;`/api/requests`&#32;- Submit new request**
-**Auth:** auth middleware required
-**Request body:**
-
-- productId (required, integer)
-- woodType (required, one of valid wood types)
-- selectedVariants (optional, array of strings)
-- dimensions (optional, string, max 200 chars)
-- notes (optional, string, max 500 chars)
-- phoneNumber (required, string, format: +XX or valid phone)
-- preferredDeliveryDate (optional, date string)
-
-**Implementation:**
-
-1. Verify user is authenticated and verified (check User.isVerified)
-2. If user not verified: Return 403 with error: "Please verify your email before submitting requests"
-3. Find product by productId
-4. If product not found or not active: Return 404 with error: "Product not found"
-5. Validate woodType is in product.availableWoodTypes
-6. If not: Return 400 with error: "Selected wood type not available for this product"
-7. Calculate totalPrice:
-
-- Start with product.basePrice
-- For each variant in selectedVariants, find matching variant in product.variants
-- Add variant.priceModifier to total
-- If any variant not found: Return 400 with error: "Invalid variant selected"
 
 8. Create Request with:
 
