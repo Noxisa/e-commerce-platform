@@ -93,7 +93,7 @@ Feedback, suggestions and constructive criticism are very welcome!
 ## 📬 Get in Touch
 Open to collaboration, freelance opportunities or job discussions.
 
-LinkedIn → linkedin.com/in/www.linkedin.com/in/tomaš-chmelevski-762b5b283
+LinkedIn → linkedin.com/ [www.linkedin.com/in/tomaš-chmelevski-762b5b283]
 
 
 Feel free to open an issue or discussion in the repo.
