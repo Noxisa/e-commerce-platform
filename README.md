@@ -81,7 +81,7 @@ npm run dev
 
 ## 📌 Project Status
 🚧 Work in progress (as of January 2026)
-This is a portfolio project showcasing:
+And this for portfolio project showcasing:
 
 Full-stack development (React + Node.js + PostgreSQL)
 Clean UI/UX design with focus on simplicity
