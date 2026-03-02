@@ -6,36 +6,67 @@ const cache = require('../utils/cache');
 const { auth } = require('../middleware/auth');
 const { adminOnly } = require('../middleware/admin');
 
-// List products (public)
-// Public list with pagination, filters and short in-memory caching
+// List products (public) with filtering, searching, sorting and pagination
+// Query params: page, limit, category, wood, q (search), sort (createdAt|basePrice|name)
 router.get('/', async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page) || 1);
     const limit = Math.min(100, Math.max(5, parseInt(req.query.limit) || 20));
     const offset = (page - 1) * limit;
-    const { category, wood, q } = req.query;
+    const { category, wood, q, sort } = req.query;
 
-    const cacheKey = `products:${page}:${limit}:${category || ''}:${wood || ''}:${q || ''}`;
+    // Build cache key including sort parameter
+    const cacheKey = `products:${page}:${limit}:${category || ''}:${wood || ''}:${q || ''}:${sort || 'createdAt'}`;
     const cached = cache.get(cacheKey);
     if (cached) {
       res.set('X-Cache', 'HIT');
       return res.json(cached);
     }
 
+    // Build where clause with isActive: true as base
     const where = { isActive: true };
-    if (category) where.category = category;
-    if (q) where.name = { [Op.iLike]: `%${q}%` };
-    if (wood) where.availableWoodTypes = { [Op.contains]: [wood] };
+    
+    // Add category filter if provided
+    if (category) {
+      where.category = category;
+    }
 
+    // Add search filter (name and description) if provided
+    if (q) {
+      where[Op.or] = [
+        { name: { [Op.iLike]: `%${q}%` } },
+        { description: { [Op.iLike]: `%${q}%` } },
+      ];
+    }
+
+    // Add wood type filter if provided
+    if (wood) {
+      where.availableWoodTypes = { [Op.contains]: [wood] };
+    }
+
+    // Determine sort column and direction
+    let orderClause = [['createdAt', 'DESC']];
+    if (sort === 'basePrice') {
+      orderClause = [['basePrice', 'ASC']];
+    } else if (sort === 'basePrice-desc') {
+      orderClause = [['basePrice', 'DESC']];
+    } else if (sort === 'name') {
+      orderClause = [['name', 'ASC']];
+    } else if (sort === 'newest') {
+      orderClause = [['createdAt', 'DESC']];
+    }
+
+    // Fetch all product fields
     const products = await Product.findAll({
       where,
-      attributes: ['id', 'name', 'category', 'basePrice', 'imageUrl', 'description'],
       limit,
       offset,
-      order: [['createdAt', 'DESC']],
+      order: orderClause,
+      raw: false,
     });
 
-    cache.set(cacheKey, products, 30); // cache 30s
+    // Cache the results for 30 seconds
+    cache.set(cacheKey, products, 30);
     res.set('Cache-Control', 'public, max-age=30');
     res.set('X-Cache', 'MISS');
     res.json(products);
