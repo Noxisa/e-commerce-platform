@@ -5,46 +5,7 @@
 Building a complete e-commerce platform for custom wooden furniture where customers can browse products, select wood types and variants, and submit requests to the company. The system includes an admin panel for managing products and customer requests. This is NOT a traditional order system - customers send requests with their selections, and the company contacts them directly to finalize pricing and deadlines.
 
 
-
-
-**Response 200:** Single product object (same structure as list)
-
-**POST&#32;`/api/products`&#32;- Create new product**
-**Auth:** adminAuth middleware required (from middleware/auth.js)
-**Request body:**
-
-- name (required, string, 3-100 chars)
-- category (required, one of: chair, table, cabinet, bed, shelf)
-- description (required, string, 10-1000 chars)
-- basePrice (required, number, positive)
-- availableWoodTypes (required, array, min 1 item, must be subset of valid types)
-- variants (optional, array of {name, priceModifier})
-
-**Validation:**
-
-- name: Trim, min 3 chars, max 100 chars
-- description: Trim, min 10 chars, max 1000 chars
-- basePrice: Must be positive number, max 2 decimal places
-- availableWoodTypes: Each must be in ['oak', 'pine', 'walnut', 'cherry', 'maple']
-- variants: Each must have 'name' (string) and 'priceModifier' (number)
-
-**Implementation:**
-
-1. Validate all fields (return 400 with specific error messages)
-2. Create product with Product.create()
-3. Return 201 with created product
-
-
-**Implementation:**
-
-1. Find product by id
-2. If not found: Return 404 with error: "Product not found"
-3. Set isActive = false (soft delete)
-4. Save product
-5. Return 200 with message: "Product deleted successfully"
-
-
-8. Create Request with:
+Create Request with:
 
 - All request body fields
 - productName: product.name (denormalized)
