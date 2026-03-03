@@ -5,34 +5,6 @@
 Building a complete e-commerce platform for custom wooden furniture where customers can browse products, select wood types and variants, and submit requests to the company. The system includes an admin panel for managing products and customer requests. This is NOT a traditional order system - customers send requests with their selections, and the company contacts them directly to finalize pricing and deadlines.
 
 
-**Implementation:**
-
-1. Build query with where: {isActive: true}
-2. If category provided: Add to where clause
-3. If search provided: Use Sequelize Op.like for name and description
-4. Apply sorting based on sort parameter
-5. Return array of products with all fields
-
-**Response 200:**
-
-```json
-{
-  "products": [
-    {
-      "id": 1,
-      "name": "Classic Wooden Chair",
-      "category": "chair",
-      "description": "...",
-      "basePrice": 1200.00,
-      "availableWoodTypes": ["oak", "pine", "walnut", "cherry", "maple"],
-      "variants": [{name: "With Armrests", priceModifier: 200}],
-      "imageUrl": null,
-      "createdAt": "2025-01-15T10:00:00Z"
-    }
-  ],
-  "count": 1
-}
-```
 
 **GET&#32;`/api/products/:id`&#32;- Get single product**
 **Auth:** None required
