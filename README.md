@@ -6,13 +6,6 @@ Building a complete e-commerce platform for custom wooden furniture where custom
 
 
 
-**GET&#32;`/api/products/:id`&#32;- Get single product**
-**Auth:** None required
-**Implementation:**
-
-1. Find product by id with where: {id, isActive: true}
-2. If not found: Return 404 with error: "Product not found"
-3. Return product with all fields
 
 **Response 200:** Single product object (same structure as list)
 
