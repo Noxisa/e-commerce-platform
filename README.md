@@ -177,74 +177,6 @@ Create Request with:
 **File: user/src/types/index.ts**
 **Purpose:** TypeScript interfaces
 
-**Interfaces to define:**
-
-```typescript
-export interface Product {
-  id: number;
-  name: string;
-  category: 'chair' | 'table' | 'cabinet' | 'bed' | 'shelf';
-  description: string;
-  basePrice: number;
-  availableWoodTypes: string[];
-  variants: ProductVariant[];
-  imageUrl: string | null;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface ProductVariant {
-  name: string;
-  priceModifier: number;
-}
-
-export interface ProductInput {
-  name: string;
-  category: string;
-  description: string;
-  basePrice: number;
-  availableWoodTypes: string[];
-  variants: ProductVariant[];
-}
-
-export interface Request {
-  id: number;
-  productId: number;
-  productName: string;
-  woodType: string;
-  selectedVariants: string[];
-  basePrice: number;
-  totalPrice: number;
-  phoneNumber: string;
-  preferredDeliveryDate: string | null;
-  dimensions: string;
-  notes: string;
-  status: 'pending' | 'contacted' | 'in_progress' | 'completed' | 'cancelled';
-  adminNotes: string;
-  userEmail: string;
-  createdAt: string;
-  updatedAt: string;
-  Product?: Product;
-}
-
-export interface RequestInput {
-  productId: number;
-  woodType: string;
-  selectedVariants: string[];
-  dimensions?: string;
-  notes?: string;
-  phoneNumber: string;
-  preferredDeliveryDate?: string;
-}
-
-export interface User {
-  id: number;
-  email: string;
-  role: 'customer' | 'admin';
-}
-```
-
 #### 2.5 Shared Components
 **File: user/src/components/ProtectedRoute.tsx**
 **Purpose:** Route wrapper for authenticated pages
@@ -676,12 +608,6 @@ export interface User {
     - Options: chair, table, cabinet, bed, shelf
     - Required
 
-3. Base Price:
-
-    - Input number
-    - Required, positive
-    - Suffix: "PLN"
-
 4. Description:
 
     - Textarea, min-height 80px
@@ -832,23 +758,6 @@ export interface User {
 - Wrap app in AuthContext.Provider
 - Use React Router (BrowserRouter)
 - Define routes with Route components
-
-**Route structure:**
-
-```
-/ - HomePage
-/products - HomePage (same component, different filters)
-/products/:productId - ProductDetailPage
-/login - LoginPage
-/register - RegisterPage
-/verify-email - VerifyEmailPage
-/dashboard - UserDashboardPage (protected)
-/admin/login - AdminLoginPage
-/admin - AdminDashboard (protected, admin only)
-  /admin/products - ProductManagementPage
-  /admin/requests - RequestManagementPage
-* - 404 Not Found page
-```
 
 **Protected routes implementation:**
 
