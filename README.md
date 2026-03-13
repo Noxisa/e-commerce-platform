@@ -4,7 +4,7 @@ Modern, responsive online store for ordering custom-made wooden furniture.
 Clean, fast, intuitive — works beautifully on desktop, tablet, and mobile.
 
 <p align="center">
-  <img src="https://via.placeholder.com/800x420.png?text=FurniWood+Hero+Screenshot" alt="FurniWood homepage" width="800"/>
+  <img src="https://via.placeholder.com/800x420.png?text=Steva+Hero+Screenshot" alt="Steva homepage" width="800"/>
   <br/>
   <em>Minimalist & warm design focused on user comfort</em>
 </p>
