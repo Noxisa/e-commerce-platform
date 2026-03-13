@@ -1,4 +1,4 @@
-# 🪵 FurniWood – Custom Wooden Furniture E-commerce
+# 🪵 Steva – Custom Wooden Furniture E-commerce
 
 Modern, responsive online store for ordering custom-made wooden furniture.  
 Clean, fast, intuitive — works beautifully on desktop, tablet, and mobile.
@@ -11,7 +11,7 @@ Clean, fast, intuitive — works beautifully on desktop, tablet, and mobile.
 
 ## 🌟 About the Project
 
-FurniWood was created to make ordering unique, made-to-measure wooden furniture simple and enjoyable — no cluttered interfaces, no overwhelming options.
+Steva was created to make ordering unique, made-to-measure wooden furniture simple and enjoyable — no cluttered interfaces, no overwhelming options.
 
 **Users can:**
 
